@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>NNN · Attendance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f5f6f8;
+            --ink: #171923;
+            --muted: #777d8b;
+            --line: #e8eaf0;
+            --purple: #6558e8;
+            --purple2: #eeeaff;
+            --green: #16845b;
+            --card: #fff;
+            --red: #c43f52;
+            --amber: #a76b00
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif
+        }
+
+        .shell {
+            max-width: 1180px;
+            margin: auto;
+            padding: 28px 28px 60px
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px
+        }
+
+        .brand {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font: 800 20px Manrope
+        }
+
+        .logo {
+            height: 40px;
+            width: 40px;
+            border-radius: 13px;
+            background: var(--purple);
+            color: white;
+            display: grid;
+            place-items: center;
+            font-size: 20px
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .date {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 24px
+        }
+
+        .eyebrow {
+            color: var(--purple);
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 1.6px;
+            text-transform: uppercase
+        }
+
+        .hero h1 {
+            font: 800 32px Manrope;
+            margin: 8px 0 5px;
+            letter-spacing: -1px
+        }
+
+        .hero p {
+            color: var(--muted);
+            margin: 0
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            background: #eceef3;
+            padding: 5px;
+            border-radius: 12px
+        }
+
+        .tab {
+            border: 0;
+            background: transparent;
+            padding: 10px 16px;
+            border-radius: 9px;
+            font-weight: 700;
+            color: var(--muted);
+            cursor: pointer
+        }
+
+        .tab.active {
+            background: white;
+            color: var(--ink);
+            box-shadow: 0 2px 8px #18203a12
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 24px 0
+        }
+
+        .stat,
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 17px;
+            padding: 20px
+        }
+
+        .stat label {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .stat strong {
+            display: block;
+            font: 800 28px Manrope;
+            margin-top: 7px
+        }
+
+        .stat small {
+            color: var(--muted)
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            gap: 18px
+        }
+
+        .panel h2 {
+            font: 800 17px Manrope;
+            margin: 0 0 5px
+        }
+
+        .sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 18px
+        }
+
+        .field {
+            margin: 15px 0
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 7px
+        }
+
+        .field select,
+        .field input,
+        .field textarea,
+        .admin-field input,
+        .admin-field select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            font: inherit;
+            color: var(--ink)
+        }
+
+        .primary {
+            border: 0;
+            background: var(--purple);
+            color: white;
+            padding: 13px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .primary:disabled {
+            opacity: .45;
+            cursor: not-allowed
+        }
+
+        .secondary {
+            border: 1px solid var(--line);
+            background: white;
+            padding: 11px 15px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .danger {
+            border: 1px solid #f1cbd1;
+            background: #fff5f6;
+            color: var(--red);
+            padding: 8px 11px;
+            border-radius: 9px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .full {
+            width: 100%
+        }
+
+        .surrender {
+            margin-top: 9px;
+            width: 100%;
+            border: 1px solid #f1cbd1;
+            background: #fff5f6;
+            color: var(--red);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .surrender:disabled {
+            opacity: .45;
+            cursor: not-allowed
+        }
+
+        .notice {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+            margin-top: 12px
+        }
+
+        .quiz {
+            display: none
+        }
+
+        .progress {
+            height: 6px;
+            background: #eeeff4;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 16px 0
+        }
+
+        .progress span {
+            display: block;
+            height: 100%;
+            background: var(--purple);
+            width: 25%;
+            transition: .2s
+        }
+
+        .qtop {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .quizimg {
+            height: 255px;
+            width: 100%;
+            object-fit: contain;
+            border-radius: 13px;
+            /* background: #eee */
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+            margin: 14px 0 18px
+        }
+
+        .option {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            padding: 12px;
+            text-align: left;
+            font: 600 13px 'DM Sans';
+            cursor: pointer
+        }
+
+        .option.selected {
+            border-color: var(--purple);
+            background: var(--purple2);
+            color: #4235bd
+        }
+
+        .qactions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .leader-row {
+            display: grid;
+            grid-template-columns: 34px 1fr auto;
+            gap: 10px;
+            align-items: center;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .rank {
+            width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            background: #f0f1f5;
+            font-weight: 800;
+            font-size: 12px
+        }
+
+        .rank.gold {
+            background: #fff3d7;
+            color: #a76b00
+        }
+
+        .rank.silver {
+            background: #edf0f5;
+            color: #667085
+        }
+
+        .rank.bronze {
+            background: #f8e9df;
+            color: #9b5a31
+        }
+
+        .person {
+            font-weight: 700;
+            font-size: 13px
+        }
+
+        .meta {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px
+        }
+
+        .points {
+            font: 800 16px Manrope
+        }
+
+        .empty {
+            padding: 25px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 7px;
+            margin: 14px 0 18px
+        }
+
+        .cal-head {
+            text-align: center;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 7px 0
+        }
+
+        .cal-day {
+            min-height: 66px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            padding: 8px 5px;
+            text-align: center;
+            cursor: pointer;
+            color: var(--ink)
+        }
+
+        .cal-day.selected {
+            border-color: var(--purple);
+            background: var(--purple2)
+        }
+
+        .cal-day .num {
+            display: block;
+            font-weight: 800;
+            font-size: 13px
+        }
+
+        .cal-day .count {
+            display: block;
+            margin-top: 5px;
+            color: var(--green);
+            font-size: 10px;
+            font-weight: 700
+        }
+
+        .cal-day.testing {
+            border-style: dashed;
+            border-color: var(--amber)
+        }
+
+        .calendar-detail {
+            background: #f8f8fb;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 18px
+        }
+
+        .calendar-detail h3 {
+            font: 700 13px Manrope;
+            margin: 0 0 8px
+        }
+
+        .calendar-detail .attendee {
+            font-size: 12px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            white-space: nowrap
+        }
+
+        .table th {
+            text-align: left;
+            color: var(--muted);
+            font-weight: 600;
+            padding: 10px 7px
+        }
+
+        .table td {
+            padding: 12px 7px;
+            border-top: 1px solid var(--line)
+        }
+
+        .pill {
+            display: inline-block;
+            background: #e8f7ef;
+            color: var(--green);
+            padding: 5px 8px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700
+        }
+
+        .pill.blocked {
+            background: #fdecef;
+            color: var(--red)
+        }
+
+        .pill.frozen {
+            background: #fff3df;
+            color: var(--amber)
+        }
+
+        .result {
+            text-align: center;
+            padding: 22px 0
+        }
+
+        .result .score {
+            font: 800 50px Manrope;
+            color: var(--purple)
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .toast {
+            padding: 12px;
+            border-radius: 10px;
+            background: #fff4df;
+            color: #815600;
+            font-size: 12px;
+            margin-top: 12px;
+            line-height: 1.5
+        }
+
+        .toast.error {
+            background: #fff0f1;
+            color: #a72e40
+        }
+
+        .foot {
+            margin-top: 24px;
+            color: #9a9eaa;
+            font-size: 11px;
+            text-align: center
+        }
+
+        .admin-panel {
+            margin-top: 16px
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .admin-field {
+            margin: 10px 0
+        }
+
+        .admin-field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .admin-member {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr auto auto;
+            gap: 8px;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 12px
+        }
+
+        .admin-member input {
+            min-width: 0;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--line);
+            border-radius: 8px
+        }
+
+        .admin-member button {
+            white-space: nowrap
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px
+        }
+
+        @media(max-width:760px) {
+            .shell {
+                padding: 18px 14px
+            }
+
+            .hero {
+                display: block
+            }
+
+            .tabs {
+                margin-top: 18px;
+                width: max-content;
+                max-width: 100%;
+                overflow: auto
+            }
+
+            .tab {
+                padding: 10px 12px
+            }
+
+            .stats {
+                gap: 8px
+            }
+
+            .stat {
+                padding: 14px
+            }
+
+            .stat strong {
+                font-size: 22px
+            }
+
+            .layout {
+                grid-template-columns: 1fr
+            }
+
+            .hero h1 {
+                font-size: 27px
+            }
+
+            .quizimg {
+                height: 220px
+            }
+
+            .admin-member {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .admin-member .member-name {
+                grid-column: 1/-1
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="shell">
+        <header class="top">
+            <div class="brand">
+                <div class="logo">✳</div> NNN<span style="color:var(--purple)">.</span>
+            </div>
+            <div class="top-actions"><button class="secondary" id="adminOpen">Admin</button>
+                <div class="date" id="today"></div>
+            </div>
+        </header>
+        <section class="hero">
+            <div>
+                <div class="eyebrow">Member portal</div>
+                <h1>Attendance, with a little challenge.</h1>
+                <p>Identify all four faces to record today's attendance and earn points.</p>
+            </div>
+            <nav class="tabs"><button class="tab active" data-tab="checkin">Check in</button><button class="tab"
+                    data-tab="leaderboard">Leaderboard</button><button class="tab" data-tab="records">Records</button>
+            </nav>
+        </section>
+        <section class="stats">
+            <div class="stat"><label>Registered members</label><strong id="memberCount">—</strong><small>On the
+                    NNN</small></div>
+            <div class="stat"><label>Checked in today</label><strong id="todayCount">—</strong><small>Attendance
+                    marked</small></div>
+            <div class="stat"><label>Quiz questions</label><strong>04</strong><small>Per attendance attempt</small>
+            </div>
+        </section>
+        <section id="checkin" class="tabview">
+            <div class="layout">
+                <div class="panel">
+                    <div id="startView">
+                        <h2>Start your check-in</h2>
+                        <div class="sub">Select your name. Your personal code is set by you on first use.</div>
+                        <div id="memberPickerWrap">
+                            <div class="field"><label for="member">Registered member</label><select id="member">
+                                    <option value="">Loading members…</option>
+                                </select></div>
+                            <div id="codeFields" class="hidden">
+                                <div class="field"><label for="memberCode">Personal code</label><input id="memberCode"
+                                        type="password" autocomplete="new-password"
+                                        placeholder="Create or enter your code"></div>
+                                <div class="field hidden" id="confirmCodeWrap"><label for="confirmCode">Confirm personal
+                                        code</label><input id="confirmCode" type="password" autocomplete="new-password"
+                                        placeholder="Re-enter your code"></div>
+                                <div class="notice" id="codeHint"></div>
+                            </div>
+                        </div>
+                        <div id="welcomeUser" class="hidden"
+                            style="margin:12px 0 18px;padding:14px;border-radius:12px;background:var(--purple2)">
+                            <h3 id="welcomeName" style="margin:0 0 10px;font:800 17px Manrope"></h3>
+                            <button id="switchMember" class="secondary" type="button">Switch member</button>
+                        </div>
+                        <button class="primary full" id="start">Start 4-question quiz <span>→</span></button>
+                        <button class="surrender" id="surrender">Surrender</button>
+                        <div class="notice">Surrendering blocks your account until an admin unblocks it. You will still
+                            be able to view the leaderboard and records.</div>
+                        <div class="notice">Attendance is recorded only after the quiz is submitted. Your score is added
+                            to the leaderboard.</div>
+                        <div id="error" class="toast hidden"></div>
+                    </div>
+                    <div class="quiz" id="quizView">
+                        <div class="qtop"><span id="qnumber">QUESTION 01 / 04</span><span id="qprogress">25%</span>
+                        </div>
+                        <div class="progress"><span id="bar"></span></div>
+                        <img class="quizimg" id="quizImage" alt="Identify this person">
+                        <h2 style="margin-top:15px">Who is this person?</h2>
+                        <div class="sub">Choose one answer to continue.</div>
+                        <div class="options" id="options"></div>
+                        <div class="qactions"><button class="secondary" id="back">Back</button><button class="primary"
+                                id="next" disabled>Next question →</button></div>
+                    </div>
+                    <div class="hidden" id="resultView">
+                        <div class="result">
+                            <div style="font-size:35px">✦</div>
+                            <div class="sub">QUIZ COMPLETE</div>
+                            <div class="score" id="score">0/4</div>
+                            <h2 id="resultTitle">Attendance marked</h2>
+                            <p class="sub" id="resultText"></p><button class="primary" id="again">Back to
+                                check-in</button>
+                        </div>
+                    </div>
+                </div>
+                <aside class="panel">
+                    <h2>Today's check-ins</h2>
+                    <div class="sub">Members who have completed the quiz today.</div>
+                    <div id="todayList" class="empty">Loading…</div>
+                </aside>
+            </div>
+        </section>
+        <section id="leaderboard" class="tabview hidden">
+            <div class="panel">
+                <h2>Leaderboard</h2>
+                <div class="sub">Total correct answers across all submitted quizzes.</div>
+                <div id="leaderList"></div>
+            </div>
+        </section>
+        <section id="records" class="tabview hidden">
+            <div class="panel">
+                <h2>November 2026 attendance</h2>
+                <div class="sub">Select a date to see which members checked in. October 31 is included temporarily for
+                    testing.</div>
+                <div id="attendanceCalendar" class="calendar"></div>
+                <div id="calendarDetail" class="calendar-detail">
+                    <h3>Select a date</h3>
+                    <div class="sub" style="margin:0">Attendance names will appear here.</div>
+                </div>
+            </div>
+            <div class="panel" style="margin-top:16px">
+                <h2>Member records</h2>
+                <div class="sub">Last check-in, cumulative quiz score and current status.</div>
+                <div style="overflow:auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Last check-in</th>
+                                <th>Total quiz score</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recordsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <div class="foot">NNN · MEMBER ATTENDANCE SYSTEM</div>
+    </main>
+
+    <dialog id="adminDialog"
+        style="border:0;border-radius:17px;width:min(900px,95vw);max-height:90vh;padding:22px;box-shadow:0 20px 70px #0004">
+        <div class="top" style="margin-bottom:12px">
+            <div>
+                <div class="eyebrow">CONTROL PANEL</div>
+                <h2 style="margin:5px 0">Admin</h2>
+            </div><button class="secondary" id="adminClose">Close</button>
+        </div>
+        <div id="adminGate">
+            <div class="admin-field"><label for="adminCode">Admin code</label><input id="adminCode" type="password">
+            </div><button id="adminUnlock" class="primary">Unlock admin</button>
+            <div id="adminError" class="toast hidden"></div>
+        </div>
+        <div id="adminBody" class="hidden">
+            <div class="panel admin-panel">
+                <h2>Add member</h2>
+                <div class="sub">Add names here, or seed them in config.js. Members create their own personal code on
+                    first use.</div>
+                <div class="admin-grid">
+                    <div class="admin-field"><label for="newMemberName">Member name</label><input id="newMemberName"
+                            placeholder="Full name"></div>
+                    <div class="admin-field"><label for="newMemberId">Member ID (optional)</label><input
+                            id="newMemberId" placeholder="Auto-generated if blank"></div>
+                </div><button id="addMember" class="primary">Add member</button>
+            </div>
+            <div class="panel admin-panel">
+                <h2>Member management</h2>
+                <div class="sub">Admin can reset/change a member code, block/unblock, or reactivate a frozen member.
+                </div>
+                <div id="adminMembers"></div>
+            </div>
+            <div class="panel admin-panel">
+                <h2>Quiz source pages</h2>
+                <div class="sub">One source URL per line. Keep the original gallery structure and selector.</div>
+                <div class="admin-field"><textarea id="pageUrls" rows="4"
+                        style="width:100%;border:1px solid var(--line);border-radius:10px;padding:12px"></textarea>
+                </div><button id="savePages" class="secondary">Save source pages</button>
+            </div>
+            <div class="panel admin-panel">
+                <h2>Image pool fallback</h2>
+                <div class="sub">Use if the source website blocks browser scraping through CORS. JSON format: [{
+                    "imageUrl":"https://…", "correctAnswer":"Name", "pageUrl":"https://…" }]</div><textarea
+                    id="imagePool" rows="5"
+                    style="width:100%;border:1px solid var(--line);border-radius:10px;padding:12px"></textarea><button
+                    id="savePool" class="secondary">Save image pool</button>
+            </div>
+            <div class="admin-actions"><button id="adminLock" class="secondary">Lock admin</button></div>
+        </div>
+    </dialog>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
